@@ -41,53 +41,7 @@ void eliminatePlayers() {
     });
 }
 
-//    void eliminatePlayers() {
-//        //Dont use string to capture names of eliminated player
-//        String eliminatedPlayers = "";
-//        int maxSuspect = 0;
-//        for (Player player : players) {
-//            if (getSuspectCount() > maxSuspect) {
-//                maxSuspect = getSuspectCount();
-//            }
-//        }
-//
-//        // Use the streaming API to select active players and select dead players
-//        for (int i = 0; i < players.size(); i++) {
-//            if ((players.get(i).isKilledByKiller() || getSuspectCount() == maxSuspect) && !players.get(i).isHealedByHealer()) {
-//
-//                System.out.println(players.get(i).getName()+ " is eliminated");
-//                players.remove(players.get(i));
-//            }
-//
-//        }
-//        for (Player player : players) {
-//            player.setKilledByKiller(false);
-//            player.setHealedByHealer(false);
-//        }
-//    }
 
-//void checkWinner(List<Player> players) {
-//    boolean isKillerPresent = players.stream().anyMatch(player -> player.getName().equals("Killer1"));
-//    if (isKillerPresent) {
-//        if (players.size() <= 2) {
-//            System.out.println("Killer wins");
-//            playNextRound=false;
-//        }
-//    }
-//    else {
-//        System.out.println("Village wins");
-//        playNextRound=false;
-//    }
-//    System.out.println(playNextRound ? "Killer not identified. Next round starts" : "Game ends");
-//}
-//    void checkWinner(List<Player> players) {
-//        boolean isKillerPresent = players.stream().anyMatch(player -> player.getName().equals("Killer1"));
-//        boolean killerWinCondition = isKillerPresent && players.size() <= 2;
-//        Runnable killerWinAction = () -> { System.out.println("Killer wins"); playNextRound = false; };
-//        Runnable villageWinAction = () -> { System.out.println("Village wins"); playNextRound = false; };
-//        (killerWinCondition ? killerWinAction : villageWinAction).run();
-//        System.out.println(playNextRound ? "Killer not identified. Next round starts" : "Game ends");
-//    }
 void checkWinner(List<Player> players) {
     for(Player player : players) {
         if(player.getName().contains("Killer")) {
