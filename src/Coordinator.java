@@ -9,11 +9,11 @@ class Coordinator {
     private final List<Player> players;
     boolean playNextRound = true;
     int[] suspectCount;
-
+    int activePlayerCount;
     public Coordinator(List<Player> players) {
         this.players = players;
         this.suspectCount = new int[6];
-
+        this.activePlayerCount= players.size();
     }
 
     void incrementSuspectCount(int targetIndex) {
@@ -29,11 +29,9 @@ void eliminatePlayers() {
             .orElse(0);
     List<Player> playersToEliminate = players.stream()
             .filter(player -> !player.alive()||getSuspectCount(players.indexOf(player))==maxSuspect)
-//            .filter(player -> !player.isEliminate && (player.dead() || getSuspectCount(players.indexOf(player)) == maxSuspect) && !player.alive())
             .peek(player -> {
                 player.setAlive(false);
-//
-
+                activePlayerCount--;
             })
             .collect(Collectors.toList());
     System.out.println("The Players eliminated in this round: " +
@@ -68,7 +66,20 @@ void eliminatePlayers() {
 //        }
 //    }
 
-
+//void checkWinner(List<Player> players) {
+//    boolean isKillerPresent = players.stream().anyMatch(player -> player.getName().equals("Killer1"));
+//    if (isKillerPresent) {
+//        if (players.size() <= 2) {
+//            System.out.println("Killer wins");
+//            playNextRound=false;
+//        }
+//    }
+//    else {
+//        System.out.println("Village wins");
+//        playNextRound=false;
+//    }
+//    System.out.println(playNextRound ? "Killer not identified. Next round starts" : "Game ends");
+//}
 //    void checkWinner(List<Player> players) {
 //        boolean isKillerPresent = players.stream().anyMatch(player -> player.getName().equals("Killer1"));
 //        boolean killerWinCondition = isKillerPresent && players.size() <= 2;
@@ -84,7 +95,7 @@ void checkWinner(List<Player> players) {
                 System.out.println("Village wins");
                 playNextRound = false;
             }
-            else if(players.size() == 2) {
+            else if(activePlayerCount <= 2) {
                 System.out.println("Killer wins");
                 playNextRound = false;
             }
@@ -92,6 +103,7 @@ void checkWinner(List<Player> players) {
     }
     System.out.println(playNextRound ? "Killer not identified. Next round starts" : "Game ends");
 }
+
 
     static void confirmSuspect(Player suspect) {
         boolean isKiller = suspect.getName().contains("Killer");
@@ -126,7 +138,7 @@ void checkWinner(List<Player> players) {
         while (playNextRound) {
             Coordinator.printPlayerDetails(players);
             players.stream()
-                    .filter(Player::alive)
+                    .filter(player -> player.alive())
                     .forEach(player -> player.play(players,coordinator));
 
             eliminatePlayers();
