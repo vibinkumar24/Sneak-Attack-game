@@ -6,17 +6,20 @@ class Doctor extends Player{
     }
     @Override
      void play(List<Player> players, Coordinator coordinator) {
+        System.out.println("Enter the index Number of the player " + this.getName() + " want to heal:");
         while (true) {
             // Move common code to super class with specific visibility
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter the index Number of the player " + this.getName() + " want to heal:");
             int targetIndex = scanner.nextInt();
             if (targetIndex < 0 || targetIndex >= players.size()) {
-                System.out.println("Invalid index");
+                System.out.println("Invalid index. choose again");
                 continue;
             }
             Player target = players.get(targetIndex);
-            Coordinator.checkEliminatedPlayer(targetIndex,players);
+            if(target.isEliminate()){
+                System.out.println("You chose the death player. try again");
+                continue;
+            }
             if (target.equals(this)) {
                 System.out.println(this.getName() + " heals himself");
             } else {

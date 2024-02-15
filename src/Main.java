@@ -10,13 +10,12 @@ class Main{
         Player doctor = new Doctor("Doctor1");
         Player detective = new Detective("Detective1");
         List<Player> players = new ArrayList<>();
-
+        players.add(killer);
         players.add(doctor);
         players.add(villager1);
         players.add(villager2);
         players.add(villager3);
         players.add(detective);
-        players.add(killer);
         Coordinator coordinator = new Coordinator(players);
         coordinator.conductGame(players, coordinator);
     }

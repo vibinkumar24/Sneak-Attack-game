@@ -3,10 +3,11 @@ import java.util.Scanner;
 public class Player{
     private String name;
      private boolean alive =true;
+    private boolean isEliminate = false;
     Player(String name){
         this.name = name;
     }
-     public String getName() {
+    public String getName() {
         return name;
     }
     public boolean alive(){
@@ -15,18 +16,26 @@ public class Player{
     public void setAlive(boolean alive){
         this.alive = alive;
     }
-
+    public boolean isEliminate() {
+        return isEliminate;
+    }
+    public void setEliminate(boolean eliminate) {
+        isEliminate = eliminate;
+    }
     void play(List<Player> players, Coordinator coordinator) {
+        System.out.println("Enter the index Number of the player " + this.getName() + " wants to Suspect:");
         while(true) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter the index Number of the player " + this.getName() + " wants to Suspect:");
             int targetIndex = scanner.nextInt();
             if(targetIndex < 0 || targetIndex >= players.size()) {
-                System.out.println("Invalid index");
+                System.out.println("Invalid index. choose again");
                 continue;
             }
             Player target = players.get(targetIndex);
-            Coordinator.checkEliminatedPlayer(targetIndex,players);
+           if(target.isEliminate()){
+               System.out.println("You chose the death player. try again");
+               continue;
+           }
             if(target.equals(this)) {
                 System.out.println(this.getName() + " cannot Suspects himself");
                 continue;
