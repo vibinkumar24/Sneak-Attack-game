@@ -23,7 +23,6 @@ class Killer extends Player{
             System.out.println("I don't commit suicide");
             play(players,coordinator);
         } else {
-//            target.setDead(true);
             target.setAlive(false);
             System.out.println(this.getName() + " kills " + target.getName());
         }
